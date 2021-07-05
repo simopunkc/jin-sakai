@@ -1,12 +1,10 @@
 class Pemain
     attr_accessor :name
-    attr_writer :hitpoint, :attack_damage
-
     def set_hitpoint(param_hitpoint)
-        self.hitpoint = param_hitpoint
+        @hitpoint = param_hitpoint
     end
     def set_damage(param_damage)
-        self.attack_damage = param_damage
+        @attack_damage = param_damage
     end
     def mungkin_80_persen_bisa_nangkis?
         probabilitas = rand()
