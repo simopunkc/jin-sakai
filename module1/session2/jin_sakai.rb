@@ -36,7 +36,7 @@ until pemain1.meninggal? || musuh.empty? do
         pilihan1 = 1
         pilihan2 = 1
         loop do
-            puts "As Jin Sekai, what do you want to do this turn?"
+            puts "As Jin Sakai, what do you want to do this turn?"
             puts "1) Attack Archer"
             puts "2) Heal an ally"
             pilihan1 = gets.chomp.to_i
