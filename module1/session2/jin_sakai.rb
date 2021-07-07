@@ -107,6 +107,9 @@ until pemain1.meninggal? || musuh.empty? do
     if musuh.size == 0
         puts "All villains defeated"
         break
+    elsif pemain1.meninggal?
+        puts "Jin Sakai dies"
+        break
     else
         i += 1
     end
