@@ -1,6 +1,6 @@
-require "./pemain"
+require "./pemain_ec"
 
-pemain1 = Pemain.new()
+pemain1 = Pemain_EpicComeback.new()
 pemain1.name = "Jin Sakai"
 pemain1.set_hitpoint(100)
 pemain1.set_damage(50)

@@ -7,12 +7,11 @@ class Pemain
         @attack_damage = param_damage
     end
     def mungkin_80_persen_bisa_nangkis?
-        probabilitas = rand()
-        return probabilitas < 0.8
+        return false
     end
     def serang(pemain_lain)
         puts "#{@name} attack #{pemain_lain.name} with #{@attack_damage} points"
-        if pemain_lain.name == "Jin Sakai" and pemain_lain.mungkin_80_persen_bisa_nangkis?
+        if pemain_lain.mungkin_80_persen_bisa_nangkis?
             puts "#{pemain_lain.name} managed to fend off the attack"
         else
             pemain_lain.kurangi_hitpoint(@attack_damage)
