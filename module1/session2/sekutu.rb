@@ -1,8 +1,6 @@
-class Sekutu < Pemain
-    def serang(pemain_lain)
-        puts "#{@name} attack #{pemain_lain.name} with #{@attack_damage} points"
-        pemain_lain.menerima_serangan(@attack_damage)
-    end
+class Sekutu
+    include Pemain
+    include PahlawanMenyerang
     def menerima_serangan(damage)
         self.kurangi_hitpoint(damage)
         if self.meninggal?

@@ -1,9 +1,11 @@
-class Pemain
-    attr_accessor :name
+module Pemain
     def initialize(param_name, param_hitpoint, param_damage)
         @name = param_name
         @hitpoint = param_hitpoint
         @attack_damage = param_damage
+    end
+    def get_name
+        return @name
     end
     def kurangi_hitpoint(damage)
         @hitpoint -= damage

@@ -1,4 +1,5 @@
-class Musuh < Pemain
+class Musuh
+    include Pemain
     kabur = false
     def mungkin_50_persen_kabur?
         probabilitas = rand()
@@ -14,7 +15,7 @@ class Musuh < Pemain
         @teknik = obj.teknik
     end
     def serang(pemain_lain)
-        puts "#{@name} #{@teknik} #{pemain_lain.name} with #{@attack_damage} points"
+        puts "#{@name} #{@teknik} #{pemain_lain.get_name} with #{@attack_damage} points"
         pemain_lain.menerima_serangan(@attack_damage)
     end
     def menerima_serangan(damage)

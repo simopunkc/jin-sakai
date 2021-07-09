@@ -1,3 +1,5 @@
+require "./pemain"
+require "./module_serang"
 require "./pahlawan"
 require "./sekutu"
 require "./musuh"
@@ -38,7 +40,7 @@ until pemain1.meninggal? || musuh.empty? do
         loop do
             puts "As Jin Sakai, what do you want to do this turn?"
             if !sekutu.empty?
-                puts "1) Attack Archer"
+                puts "1) Attack an enemy"
                 puts "2) Heal an ally"
                 pilihan1 = gets.chomp.to_i
             else
@@ -49,13 +51,19 @@ until pemain1.meninggal? || musuh.empty? do
                 when 1
                     loop do
                         puts "Which enemy you want to attack?"
-                        a = 1
-                        musuh.each do |lawan|
-                            puts "#{a}) #{lawan.name}"
-                            a += 1
-                        end
-                        pilihan2 = gets.chomp.to_i
-                        if pilihan2.between?(1,musuh.size)
+                        if musuh.size > 1
+                            a = 1
+                            musuh.each do |lawan|
+                                puts "#{a}) #{lawan.get_name}"
+                                a += 1
+                            end
+                            pilihan2 = gets.chomp.to_i
+                            if pilihan2.between?(1,musuh.size)
+                                pilihan2 -= 1
+                                break
+                            end
+                        else
+                            pilihan2 = 0
                             break
                         end
                     end
@@ -64,13 +72,19 @@ until pemain1.meninggal? || musuh.empty? do
                     if !sekutu.empty?
                         loop do
                             puts "Which ally you want to heal?"
-                            b = 1
-                            sekutu.each do |teman|
-                                puts "#{b}) #{teman.name}"
-                                b += 1
-                            end
-                            pilihan2 = gets.chomp.to_i
-                            if pilihan2.between?(1,sekutu.size)
+                            if sekutu.size > 1
+                                b = 1
+                                sekutu.each do |teman|
+                                    puts "#{b}) #{teman.get_name}"
+                                    b += 1
+                                end
+                                pilihan2 = gets.chomp.to_i
+                                if pilihan2.between?(1,sekutu.size)
+                                    pilihan2 -= 1
+                                    break
+                                end
+                            else
+                                pilihan2 = 0
                                 break
                             end
                         end
@@ -82,23 +96,31 @@ until pemain1.meninggal? || musuh.empty? do
             end
         end
         if pilihan1 == 1
-            target = musuh[pilihan2-1]
+            target = musuh[pilihan2]
             pemain1.serang(target)
             musuh.delete(target) if target.meninggal? || target.get_kabur?
         else
-            target = sekutu[pilihan2-1]
+            target = sekutu[pilihan2]
             pemain1.sembuhkan(target)
         end
     end
-    sekutu.each do |teman|
-        acak = rand(musuh.size)
-        target2 = musuh[acak]
-        teman.serang(target2)
-        musuh.delete(target2) if target2.meninggal? || target2.get_kabur?
+    if !sekutu.empty?
+        sekutu.each do |teman|
+            if musuh.empty?
+                break
+            end
+            acak = rand(musuh.size)
+            target2 = musuh[acak]
+            teman.serang(target2)
+            musuh.delete(target2) if target2.meninggal? || target2.get_kabur?
+        end
     end
     puts "\n"
     if !musuh.empty?
         musuh.each do |lawan|
+            if hero.empty?
+                break
+            end
             acak = rand(hero.size)
             target3 = hero[acak]
             lawan.serang(target3)
