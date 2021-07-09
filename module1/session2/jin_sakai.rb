@@ -37,9 +37,13 @@ until pemain1.meninggal? || musuh.empty? do
         pilihan2 = 1
         loop do
             puts "As Jin Sakai, what do you want to do this turn?"
-            puts "1) Attack Archer"
-            puts "2) Heal an ally"
-            pilihan1 = gets.chomp.to_i
+            if !sekutu.empty?
+                puts "1) Attack Archer"
+                puts "2) Heal an ally"
+                pilihan1 = gets.chomp.to_i
+            else
+                pilihan1 = 1
+            end
             if pilihan1.between?(1,2)
                 case pilihan1
                 when 1
@@ -93,21 +97,23 @@ until pemain1.meninggal? || musuh.empty? do
         musuh.delete(target2) if target2.meninggal? || target2.get_kabur?
     end
     puts "\n"
-    musuh.each do |lawan|
-        acak = rand(hero.size)
-        target3 = hero[acak]
-        lawan.serang(target3)
-        hero.delete(target3) if target3.meninggal?
-        if acak > 0
-            target4 = sekutu[acak-1]
-            sekutu.delete(target4) if target4.meninggal?
+    if !musuh.empty?
+        musuh.each do |lawan|
+            acak = rand(hero.size)
+            target3 = hero[acak]
+            lawan.serang(target3)
+            hero.delete(target3) if target3.meninggal?
+            if acak > 0
+                target4 = sekutu[acak-1]
+                sekutu.delete(target4) if target4.meninggal?
+            end
         end
-    end
-    puts "\n"
-    if musuh.size == 0
+    else
         puts "All villains defeated"
         break
-    elsif pemain1.meninggal?
+    end
+    puts "\n"
+    if pemain1.meninggal?
         puts "Jin Sakai dies"
         break
     else
