@@ -108,12 +108,12 @@ until pemain1.meninggal? || musuh.empty? do
                 sekutu.delete(target4) if target4.meninggal?
             end
         end
-    end
-    puts "\n"
-    if musuh.size == 0
+    else
         puts "All villains defeated"
         break
-    elsif pemain1.meninggal?
+    end
+    puts "\n"
+    if pemain1.meninggal?
         puts "Jin Sakai dies"
         break
     else
