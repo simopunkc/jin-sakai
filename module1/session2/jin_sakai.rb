@@ -10,15 +10,12 @@ pemain2 = Sekutu.new("Yuna",90,45)
 pemain3 = Sekutu.new("Sensei Ishihara",80,60)
 hero = [pemain1,pemain2,pemain3]
 sekutu = [pemain2,pemain3]
-teknik1 = Archer.new
-teknik2 = Spearman.new
-teknik3 = Swordsman.new
 musuh1 = Musuh.new("Mongol Archer",80,40)
-musuh1.set_teknik(teknik1)
+musuh1.set_teknik(Archer.new)
 musuh2 = Musuh.new("Mongol Spearman",120,60)
-musuh2.set_teknik(teknik2)
+musuh2.set_teknik(Spearman.new)
 musuh3 = Musuh.new("Mongol Swordsman",100,50)
-musuh3.set_teknik(teknik3)
+musuh3.set_teknik(Swordsman.new)
 musuh = [musuh1, musuh2, musuh3]
 
 i = 1
@@ -27,11 +24,15 @@ until pemain1.meninggal? || musuh.empty? do
     if !pemain1.meninggal?
         pemain1.status
     end
-    sekutu.each do |teman|
-        teman.status
+    if !sekutu.empty?
+        sekutu.each do |teman|
+            teman.status
+        end
     end
-    musuh.each do |lawan|
-        lawan.status
+    if !musuh.empty?
+        musuh.each do |lawan|
+            lawan.status
+        end
     end
     puts "\n"
     if !pemain1.meninggal?
@@ -43,8 +44,6 @@ until pemain1.meninggal? || musuh.empty? do
                 puts "1) Attack an enemy"
                 puts "2) Heal an ally"
                 pilihan1 = gets.chomp.to_i
-            else
-                pilihan1 = 1
             end
             if pilihan1.between?(1,2)
                 case pilihan1
