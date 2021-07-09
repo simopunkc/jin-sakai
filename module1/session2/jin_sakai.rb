@@ -44,6 +44,8 @@ until pemain1.meninggal? || musuh.empty? do
                 puts "1) Attack an enemy"
                 puts "2) Heal an ally"
                 pilihan1 = gets.chomp.to_i
+            else
+                pilihan1 = 1
             end
             if pilihan1.between?(1,2)
                 case pilihan1
