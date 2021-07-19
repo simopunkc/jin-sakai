@@ -1,0 +1,14 @@
+<body>
+<h1>Create a new item</h1>
+<form method="POST" action="/items/create">
+<input name="name" type="text" placeholder="masukkan nama item">
+<input name="price" type="number" placeholder="masukkan harga item">
+<select name="kategori">
+<option value="">Pilih kategori</option>
+<% kategori.each do |item| %>
+    <option value="<%= item.id %>"><%= item.name %></option>
+<% end %>
+</select>
+<button type="submit">Submit</button>
+</form>
+</body>

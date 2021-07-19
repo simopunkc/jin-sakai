@@ -1,0 +1,8 @@
+<h1>Item Details</h1>
+<% items.each do |item| %>
+<div>Item name: <%= item.name %></div>
+<div>Item price: <%= item.price %></div>
+<div>Item category: <%= item.category.name %></div>
+<% end %>
+<br/>
+<a href="/">Kembali ke homepage</a>

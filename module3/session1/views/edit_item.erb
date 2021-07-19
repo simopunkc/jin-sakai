@@ -1,0 +1,19 @@
+<body>
+<% items.each do |item| %>
+<h1>Edit <%= item.name %></h1>
+<form method="POST" action="/items/<%= item.id %>/edit">
+<input name="name" type="text" placeholder="masukkan nama item" value="<%= item.name %>">
+<input name="price" type="number" placeholder="masukkan harga item" value="<%= item.price %>">
+    <select name="kategori">
+    <% kategori.each do |topik| %>
+        <% if item.category.id == topik.id %>
+            <option value="<%= topik.id %>" selected><%= topik.name %></option>
+        <% else %>
+            <option value="<%= topik.id %>"><%= topik.name %></option>
+        <% end %>
+    <% end %>
+    </select>
+<button type="submit">Submit</button>
+</form>
+<% end %>
+</body>
