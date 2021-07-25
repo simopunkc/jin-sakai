@@ -1,8 +1,8 @@
-require_relative "../models/m_koneksi_db"
-require_relative "../models/m_raw_item"
-require_relative "../models/module/m_validasi_item"
-require_relative "../models/module/m_detail_item"
-require_relative "../models/m_single_item"
+require "./models/m_koneksi_db"
+require "./models/m_raw_item"
+require "./models/module/m_validasi_item"
+require "./models/module/m_detail_item"
+require "./models/m_single_item"
 
 class C_single_item
     def self.cetak_single_item(params)
@@ -14,7 +14,7 @@ class C_single_item
         end
         if error[:hasil] == false
             items = model.get_detail_item(id)
-            view = ERB.new(File.read(FOLDER_TEMPLATE + "/v_single_item.erb"))
+            view = ERB.new(File.read("./views/v_single_item.erb"))
             view.result(binding)
         else
             return error

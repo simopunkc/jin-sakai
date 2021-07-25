@@ -1,8 +1,8 @@
-require_relative "../models/m_koneksi_db"
-require_relative "../models/m_raw_category"
-require_relative "../models/module/m_validasi_string"
-require_relative "../models/module/m_validasi_kategori"
-require_relative "../models/m_db_edit_kategori"
+require "./models/m_koneksi_db"
+require "./models/m_raw_category"
+require "./models/module/m_validasi_string"
+require "./models/module/m_validasi_kategori"
+require "./models/m_db_edit_kategori"
 
 class C_db_edit_kategori
     def self.simpan_kategori(params)

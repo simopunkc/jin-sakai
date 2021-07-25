@@ -1,10 +1,10 @@
-require_relative "../models/m_koneksi_db"
-require_relative "../models/m_raw_category"
-require_relative "../models/module/m_validasi_string"
-require_relative "../models/module/m_validasi_integer"
-require_relative "../models/module/m_db_item"
-require_relative "../models/module/m_get_semua_kategori"
-require_relative "../models/m_db_tambah_item"
+require "./models/m_koneksi_db"
+require "./models/m_raw_category"
+require "./models/module/m_validasi_string"
+require "./models/module/m_validasi_integer"
+require "./models/module/m_db_item"
+require "./models/module/m_get_semua_kategori"
+require "./models/m_db_tambah_item"
 
 class C_db_tambah_item
     def self.simpan_item(params)

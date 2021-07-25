@@ -1,6 +1,6 @@
-require_relative "../models/m_koneksi_db"
-require_relative "../models/module/m_validasi_item"
-require_relative "../models/m_db_delete_item"
+require "./models/m_koneksi_db"
+require "./models/module/m_validasi_item"
+require "./models/m_db_delete_item"
 
 class C_db_delete_item
     def self.delete_item(params)

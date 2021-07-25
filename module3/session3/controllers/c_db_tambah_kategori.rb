@@ -1,6 +1,6 @@
-require_relative "../models/m_koneksi_db"
-require_relative "../models/module/m_validasi_string"
-require_relative "../models/m_db_tambah_kategori"
+require "./models/m_koneksi_db"
+require "./models/module/m_validasi_string"
+require "./models/m_db_tambah_kategori"
 
 class C_db_tambah_kategori
     def self.simpan_kategori(params)

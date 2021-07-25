@@ -1,8 +1,8 @@
-require_relative "../models/m_koneksi_db"
-require_relative "../models/m_raw_item"
-require_relative "../models/m_raw_category"
-require_relative "../models/module/m_detail_item"
-require_relative "../models/m_daftar_kategori_pada_item"
+require "./models/m_koneksi_db"
+require "./models/m_raw_item"
+require "./models/m_raw_category"
+require "./models/module/m_detail_item"
+require "./models/m_daftar_kategori_pada_item"
 
 class C_daftar_kategori_pada_item
     def self.cetak_daftar_kategori_pada_item(params)
@@ -15,7 +15,7 @@ class C_daftar_kategori_pada_item
         end
         if error[:hasil] == false
             items = model.get_semua_kategori_pada_item(id)
-            view = ERB.new(File.read(FOLDER_TEMPLATE + "/v_daftar_kategori_pada_item.erb"))
+            view = ERB.new(File.read("./views/v_daftar_kategori_pada_item.erb"))
             view.result(binding)
         else
             return error
