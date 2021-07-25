@@ -1,0 +1,24 @@
+<h1># Daftar kategori</h1>
+<table>
+    <thead>
+        <th>id</th>
+        <th>Name</th>
+        <th>Action</th>
+        <th>Action</th>
+        <th>Action</th>
+    </thead>
+    <tbody>
+    <% items.each do |item| %>
+    <tr>
+        <td><%= item.id %></td>
+        <td><%= item.name %></td>
+        <td><a href="/category/<%= item.id %>" title="Tampilkan isi kategori">Show</a></td>
+        <td><a href="/category/<%= item.id %>/edit" title="Edit kategori">Edit</a></td>
+        <td><button type="button" onclick="konfirmasi_hapus('/category/<%= item.id %>/delete')">Delete</button></td>
+    </tr>
+    <% end %>
+    </tbody>
+</table>
+<br/>
+<button type="button" onclick="window.location.href='/category/new'">Tambah Category</button>
+<button type="button" onclick="window.location.href='/'">Kembali ke homepage</button>

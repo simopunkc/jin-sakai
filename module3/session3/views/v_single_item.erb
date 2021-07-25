@@ -1,0 +1,26 @@
+<h1># Detail Item</h1>
+<% items.each do |item| %>
+<table>
+    <thead>
+        <th>Name</th>
+        <th>Price</th>
+        <% if item.category != nil %>
+            <th>category</th>
+        <% end %>
+    </thead>
+    <tbody>
+        <tr>
+        <td><%= item.name %></td>
+        <td><%= item.price %></td>
+        <% if item.category != nil %>
+            <td><%= item.category %></td>
+        <% end %>
+        </tr>
+    </tbody>
+</table>
+<br/>
+    <% if item.category != nil %>
+        <button type="button" onclick="window.location.href='/items/<%= item.id %>/category/'">Lihat daftar kategori</button>
+    <% end %>
+<% end %>
+<button type="button" onclick="window.location.href='/'">Kembali ke homepage</button>

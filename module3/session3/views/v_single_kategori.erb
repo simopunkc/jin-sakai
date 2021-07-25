@@ -1,0 +1,27 @@
+<% kategori.each do |topik| %>
+<h1># Daftar item pada <%= topik.name %></h1>
+<table>
+    <thead>
+        <th>id</th>
+        <th>Name</th>
+        <th>Price</th>
+        <th>Action</th>
+        <th>Action</th>
+        <th>Action</th>
+    </thead>
+    <tbody>
+    <% items.each do |item| %>
+    <tr>
+        <td><%= item.id %></td>
+        <td><%= item.name %></td>
+        <td><%= item.price %></td>
+        <td><a href="/items/<%= item.id %>" title="Tampilkan detail item">Show</a></td>
+        <td><a href="/items/<%= item.id %>/edit" title="Edit item">Edit</a></td>
+        <td><button type="button" onclick="konfirmasi_hapus('/items/<%= item.id %>/category/<%= topik.id %>/delete')">Delete</button></td>
+        </tr>
+    <% end %>
+    </tbody>
+</table>
+<br/>
+<button type="button" onclick="window.location.href='/category/'">Kembali ke daftar kategori</button>
+<% end %>
