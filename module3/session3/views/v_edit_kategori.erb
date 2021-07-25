@@ -1,0 +1,10 @@
+<body>
+<% items.each do |item| %>
+<h1># Edit <%= item.name %></h1>
+<form method="POST" action="/category/<%= item.id %>/edit">
+<input name="name" type="text" placeholder="masukkan nama kategori" value="<%= item.name %>">
+<button type="submit">Submit</button>
+<button type="button" onclick="window.location.href='/category/<%= item.id %>'">Batal</button>
+</form>
+<% end %>
+</body>

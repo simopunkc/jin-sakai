@@ -1,0 +1,24 @@
+<body>
+<% items.each do |item| %>
+<h1># Edit <%= item.name %></h1>
+<form method="POST" action="/items/<%= item.id %>/edit">
+<input name="name" type="text" placeholder="masukkan nama item" value="<%= item.name %>">
+<input name="price" type="number" placeholder="masukkan harga item" value="<%= item.price %>">
+<br/>
+<br/>
+<div class="label-potrait">Pilih kategori</div>
+<% kategori.each do |topik| %>
+    <input type="checkbox" id="kate<%= topik.id %>" name="kategori<%= topik.id %>" value="<%= topik.id %>" 
+    <% if daftar_kategori.include? topik.id %>
+         checked
+    <% end %>
+    >
+    <label for="kate<%= topik.id %>"><%= topik.name %></label><br>
+<% end %>
+<br/>
+<br/>
+<button type="submit">Submit</button>
+<button type="button" onclick="window.location.href='/items/<%= item.id %>'">Batal</button>
+</form>
+<% end %>
+</body>
