@@ -1,0 +1,18 @@
+<body>
+<h1># Tambah item</h1>
+<form method="POST" action="/items/create">
+<input name="name" type="text" placeholder="masukkan nama item">
+<input name="price" type="number" placeholder="masukkan harga item">
+<br/>
+<br/>
+<div class="label-potrait">Pilih kategori</div>
+<% kategori.each do |topik| %>
+    <input type="checkbox" id="kate<%= topik.id %>" name="kategori<%= topik.id %>" value="<%= topik.id %>">
+    <label for="kate<%= topik.id %>"><%= topik.name %></label><br>
+<% end %>
+<br/>
+<br/>
+<button type="submit">Submit</button>
+<button type="button" onclick="window.location.href='/'">Batal</button>
+</form>
+</body>
