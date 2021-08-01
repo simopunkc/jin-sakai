@@ -9,6 +9,7 @@ class M_db_tambah_item
         client.query("insert into items (name,price) values ('#{name}',#{price})")
         client.last_id
     end
+
     def simpan_item(name,price,kategori=nil)
         id = insert_item(name,price)
         if kategori.size > 0
