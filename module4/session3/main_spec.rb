@@ -39,18 +39,31 @@ describe C_tambah_item do
     end
 end
 
-describe C_daftar_kategori do
-    it "render daftar_kategori" do
-        items = []
-        view = ERB.new(File.read("./views/v_daftar_kategori.erb")).result(binding)
-        expect(view).not_to be_nil
+describe C_db_tambah_item do
+    it "should blank name" do
+        item = M_item.new('',5000)
+        hasil = M_db_tambah_item.new.cek_valid(item.name,item.price)
+        expect(hasil).to eq({:hasil => true, :pesan => "Nama wajib diisi"})
     end
-end
-
-describe C_tambah_kategori do
-    it "render tambah_kategori" do
-        view = ERB.new(File.read("./views/v_tambah_kategori.erb")).result(binding)
-        expect(view).not_to be_nil
+    it "should name string" do
+        item = M_item.new(1,5000)
+        hasil = M_db_tambah_item.new.cek_valid(item.name,item.price)
+        expect(hasil).to eq({:hasil => true, :pesan => "Nama harus dalam bentuk string"})
+    end
+    it "should blank price" do
+        item = M_item.new('mie',nil)
+        hasil = M_db_tambah_item.new.cek_valid(item.name,item.price)
+        expect(hasil).to eq({:hasil => true, :pesan => "Price wajib diisi"})
+    end
+    it "should price integer" do
+        item = M_item.new('mie',"bawang")
+        hasil = M_db_tambah_item.new.cek_valid(item.name,item.price)
+        expect(hasil).to eq({:hasil => true, :pesan => "Price harus dalam bentuk angka"})
+    end
+    it "should valid parameter" do
+        item = M_item.new('mie',5000)
+        hasil = M_db_tambah_item.new.cek_valid(item.name,item.price)
+        expect(hasil).to eq({:hasil => false, :pesan => ""})
     end
 end
 
@@ -64,10 +77,91 @@ describe C_edit_item do
     end
 end
 
+describe C_db_edit_item do
+    it "should blank id" do
+        item = M_item.new('mie',5000,'')
+        hasil = M_db_edit_item.new.cek_valid(item.name,item.price,item.id)
+        expect(hasil).to eq({:hasil => true, :pesan => "ID wajib diisi"})
+    end
+    it "should id integer" do
+        item = M_item.new('mie',5000,'aaa')
+        hasil = M_db_edit_item.new.cek_valid(item.name,item.price,item.id)
+        expect(hasil).to eq({:hasil => true, :pesan => "ID harus dalam bentuk angka"})
+    end
+    it "should id invalid" do
+        item = M_item.new('mie',5000,0)
+        hasil = M_db_edit_item.new.cek_item(item.id)
+        expect(hasil).to eq(0)
+    end
+    it "should blank name" do
+        item = M_item.new('',5000,1)
+        hasil = M_db_edit_item.new.cek_valid(item.name,item.price,item.id)
+        expect(hasil).to eq({:hasil => true, :pesan => "Nama wajib diisi"})
+    end
+    it "should name string" do
+        item = M_item.new(1,5000,1)
+        hasil = M_db_edit_item.new.cek_valid(item.name,item.price,item.id)
+        expect(hasil).to eq({:hasil => true, :pesan => "Nama harus dalam bentuk string"})
+    end
+    it "should blank price" do
+        item = M_item.new('mie',nil,1)
+        hasil = M_db_edit_item.new.cek_valid(item.name,item.price,item.id)
+        expect(hasil).to eq({:hasil => true, :pesan => "Price wajib diisi"})
+    end
+    it "should price integer" do
+        item = M_item.new('mie',"bawang",1)
+        hasil = M_db_edit_item.new.cek_valid(item.name,item.price,item.id)
+        expect(hasil).to eq({:hasil => true, :pesan => "Price harus dalam bentuk angka"})
+    end
+    it "should valid parameter" do
+        item = M_item.new('mie',5000,1)
+        hasil = M_db_edit_item.new.cek_valid(item.name,item.price,item.id)
+        expect(hasil).to eq({:hasil => false, :pesan => ""})
+    end
+end
+
 describe C_single_item do
     it "render single_item" do
         items = []
         view = ERB.new(File.read("./views/v_single_item.erb")).result(binding)
+        expect(view).not_to be_nil
+    end
+end
+
+describe C_db_delete_item do
+    it "should blank id" do
+        item = M_item.new('mie',5000,'')
+        hasil = M_db_delete_item.new.cek_valid(item.id)
+        expect(hasil).to eq({:hasil => true, :pesan => "ID wajib diisi"})
+    end
+    it "should id integer" do
+        item = M_item.new('mie',5000,'aaa')
+        hasil = M_db_delete_item.new.cek_valid(item.id)
+        expect(hasil).to eq({:hasil => true, :pesan => "ID harus dalam bentuk angka"})
+    end
+    it "should id invalid" do
+        item = M_item.new('mie',5000,0)
+        hasil = M_db_delete_item.new.cek_item(item.id)
+        expect(hasil).to eq(0)
+    end
+    it "should valid parameter" do
+        item = M_item.new('mie',5000,1)
+        hasil = M_db_delete_item.new.cek_valid(item.id)
+        expect(hasil).to eq({:hasil => false, :pesan => ""})
+    end
+end
+
+describe C_daftar_kategori do
+    it "render daftar_kategori" do
+        items = []
+        view = ERB.new(File.read("./views/v_daftar_kategori.erb")).result(binding)
+        expect(view).not_to be_nil
+    end
+end
+
+describe C_tambah_kategori do
+    it "render tambah_kategori" do
+        view = ERB.new(File.read("./views/v_tambah_kategori.erb")).result(binding)
         expect(view).not_to be_nil
     end
 end
@@ -89,12 +183,131 @@ describe C_edit_kategori do
     end
 end
 
+describe C_db_delete_kategori do
+    it "should blank id" do
+        item = M_category.new('mie','')
+        hasil = M_db_delete_kategori.new.cek_valid(item.id)
+        expect(hasil).to eq({:hasil => true, :pesan => "ID wajib diisi"})
+    end
+    it "should id integer" do
+        item = M_category.new('mie','aaa')
+        hasil = M_db_delete_kategori.new.cek_valid(item.id)
+        expect(hasil).to eq({:hasil => true, :pesan => "ID harus dalam bentuk angka"})
+    end
+    it "should id invalid" do
+        item = M_category.new('mie',0)
+        hasil = M_db_delete_kategori.new.cek_kategori(item.id)
+        expect(hasil).to eq(0)
+    end
+    it "should valid parameter" do
+        item = M_category.new('mie',1)
+        hasil = M_db_delete_kategori.new.cek_valid(item.id)
+        expect(hasil).to eq({:hasil => false, :pesan => ""})
+    end
+end
+
+describe C_db_tambah_kategori do
+    it "should blank name" do
+        item = M_category.new('',1)
+        hasil = M_db_tambah_kategori.new.cek_valid(item.name)
+        expect(hasil).to eq({:hasil => true, :pesan => "Nama wajib diisi"})
+    end
+    it "should name string" do
+        item = M_category.new(1,1)
+        hasil = M_db_tambah_kategori.new.cek_valid(item.name)
+        expect(hasil).to eq({:hasil => true, :pesan => "Nama harus dalam bentuk string"})
+    end
+    it "should valid parameter" do
+        item = M_category.new('makanan',1)
+        hasil = M_db_tambah_kategori.new.cek_valid(item.name)
+        expect(hasil).to eq({:hasil => false, :pesan => ""})
+    end
+end
+
+describe C_db_edit_kategori do
+    it "should blank id" do
+        item = M_category.new('makanan','')
+        hasil = M_db_edit_kategori.new.cek_valid(item.name,item.id)
+        expect(hasil).to eq({:hasil => true, :pesan => "ID wajib diisi"})
+    end
+    it "should id integer" do
+        item = M_category.new('makanan','aaa')
+        hasil = M_db_edit_kategori.new.cek_valid(item.name,item.id)
+        expect(hasil).to eq({:hasil => true, :pesan => "ID harus dalam bentuk angka"})
+    end
+    it "should id invalid" do
+        item = M_category.new('makanan',0)
+        hasil = M_db_edit_kategori.new.cek_kategori(item.id)
+        expect(hasil).to eq(0)
+    end
+    it "should blank name" do
+        item = M_category.new('',1)
+        hasil = M_db_edit_kategori.new.cek_valid(item.name,item.id)
+        expect(hasil).to eq({:hasil => true, :pesan => "Nama wajib diisi"})
+    end
+    it "should name string" do
+        item = M_category.new(1,1)
+        hasil = M_db_edit_kategori.new.cek_valid(item.name,item.id)
+        expect(hasil).to eq({:hasil => true, :pesan => "Nama harus dalam bentuk string"})
+    end
+    it "should valid parameter" do
+        item = M_category.new('makanan',1)
+        hasil = M_db_edit_kategori.new.cek_valid(item.name,item.id)
+        expect(hasil).to eq({:hasil => false, :pesan => ""})
+    end
+end
+
 describe C_daftar_kategori_pada_item do
     it "render daftar_kategori_pada_item" do
         single_item = []
         items = []
         view = ERB.new(File.read("./views/v_daftar_kategori_pada_item.erb")).result(binding)
         expect(view).not_to be_nil
+    end
+end
+
+describe C_db_delete_kategori_pada_item do
+    it "should blank id item" do
+        item = M_item.new('mie',5000,'')
+        kategori = M_category.new('makanan',1)
+        hasil = M_db_delete_kategori_pada_item.new.cek_valid(item.id,kategori.id)
+        expect(hasil).to eq({:hasil => true, :pesan => "ID item wajib diisi"})
+    end
+    it "should id item integer" do
+        item = M_item.new('mie',5000,'aaa')
+        kategori = M_category.new('makanan',1)
+        hasil = M_db_delete_kategori_pada_item.new.cek_valid(item.id,kategori.id)
+        expect(hasil).to eq({:hasil => true, :pesan => "ID item harus dalam bentuk angka"})
+    end
+    it "should id item invalid" do
+        item = M_item.new('mie',5000,0)
+        kategori = M_category.new('makanan',1)
+        hasil = M_db_delete_kategori_pada_item.new.cek_item(item.id)
+        expect(hasil).to eq(0)
+    end
+    it "should blank id kategori" do
+        item = M_item.new('mie',5000,1)
+        kategori = M_category.new('makanan','')
+        hasil = M_db_delete_kategori_pada_item.new.cek_valid(item.id,kategori.id)
+        expect(hasil).to eq({:hasil => true, :pesan => "ID kategori wajib diisi"})
+    end
+    it "should id kategori integer" do
+        item = M_item.new('mie',5000,1)
+        kategori = M_category.new('makanan','aaa')
+        hasil = M_db_delete_kategori_pada_item.new.cek_valid(item.id,kategori.id)
+        expect(hasil).to eq({:hasil => true, :pesan => "ID kategori harus dalam bentuk angka"})
+    end
+    it "should id kategori invalid" do
+        item = M_item.new('mie',5000,1)
+        kategori = M_category.new('makanan',0)
+        hasil = M_db_delete_kategori_pada_item.new.cek_kategori(kategori.id)
+        expect(hasil).to eq(0)
+    end
+    it "should valid parameter" do
+        item = M_item.new('mie',5000,1)
+        kategori = M_category.new('makanan',1)
+        hasil = M_db_delete_kategori_pada_item.new.cek_valid(item.id,kategori.id)
+        expect(hasil).to eq({:hasil => false, :pesan => ""})
     end
 end
 

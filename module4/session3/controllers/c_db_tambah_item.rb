@@ -8,7 +8,6 @@ require "./models/m_db_tambah_item"
 
 class C_db_tambah_item
     def self.simpan_item(params)
-        error = {:hasil => false, :pesan => ""}
         name = params['name']
         price = params['price']
         model = M_db_tambah_item.new
@@ -20,17 +19,10 @@ class C_db_tambah_item
                 daftar_kategori << kate.id.to_s
             end
         end
-        if name.empty?
-            error = {:hasil => true, :pesan => "Nama wajib diisi"}
-        elsif !model.cek_string?(name)
-            error = {:hasil => true, :pesan => "Nama harus dalam bentuk string"}
-        end
-        if !price.empty?
-            if !model.cek_integer?(price)
-                error = {:hasil => true, :pesan => "Price harus dalam bentuk angka"}
-            end
-        end
+        error = model.cek_valid(name,price)
         if error[:hasil] == false
+            name = name.to_s
+            price = price.to_i
             model.simpan_item(name,price,daftar_kategori)
             error = "none"
         end

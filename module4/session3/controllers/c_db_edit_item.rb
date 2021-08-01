@@ -10,7 +10,6 @@ require "./models/m_db_edit_item"
 
 class C_db_edit_item
     def self.simpan_item(params)
-        error = {:hasil => false, :pesan => ""}
         id = params[:id]
         name = params['name']
         price = params['price']
@@ -23,18 +22,7 @@ class C_db_edit_item
                 daftar_kategori << kate.id.to_s
             end
         end
-        if !model.cek_item(id)
-            error = {:hasil => true, :pesan => "id tidak valid"}
-        elsif name.empty?
-            error = {:hasil => true, :pesan => "Nama wajib diisi"}
-        elsif !model.cek_string?(name)
-            error = {:hasil => true, :pesan => "Nama harus dalam bentuk string"}
-        end
-        if !price.empty?
-            if !model.cek_integer?(price)
-                error = {:hasil => true, :pesan => "Price harus dalam bentuk angka"}
-            end
-        end
+        error = model.cek_valid(name,price,id)
         if error[:hasil] == false
             model.edit_item(id,name,price,daftar_kategori)
             error = "none"
